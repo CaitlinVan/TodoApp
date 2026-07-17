@@ -1,3 +1,5 @@
 <Solution>
+  <Folder Name="/Solution Items/" />
   <Project Path="TodoApp.Console/TodoApp.Console.csproj" />
+  <Project Path="TodoApp.UI/TodoApp.UI.csproj" />
 </Solution>
