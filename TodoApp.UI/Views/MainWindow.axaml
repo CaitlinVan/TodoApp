@@ -24,7 +24,6 @@
             </StackPanel>
             
             
-            
             <ListBox ItemsSource="{Binding Tasks}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
