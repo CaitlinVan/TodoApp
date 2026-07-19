@@ -2,6 +2,7 @@
 using TodoApp.Console.Domain; 
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
+using System.Threading.Tasks;
 
 namespace TodoApp.UI.ViewModels;
 
@@ -14,8 +15,14 @@ public partial class MainWindowViewModel : ViewModelBase
 
     public MainWindowViewModel()
     {
-        
+        _taskRepository = new TaskRepository(new TodoDbContext());
+        _ = LoadTasksAsync(); 
     }
-    
+
+    private async Task LoadTasksAsync()
+    {
+        var tasks = await _taskRepository.GetAllAsync();
+        Tasks = new ObservableCollection<TodoTask>(tasks);
+    }
     
 }
