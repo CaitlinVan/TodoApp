@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace TodoApp.UI.ViewModels;
 
+//Constructor, Tasks Property, LoadTasksAsync
+
 public partial class MainWindowViewModel : ViewModelBase
 {
     private readonly ITaskRepository _taskRepository;

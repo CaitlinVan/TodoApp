@@ -17,13 +17,27 @@
     
     <!--> Enable Data binding so you reduce manual UI-update code</-->
     <Grid>
-        <ListBox ItemsSource="{Binding Tasks}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Title}"></TextBlock>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <DockPanel>
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Spacing="10" Margin="10">
+                <TextBox Text="{Binding NewTaskTitle}" Watermark="New Task..." Width="300"></TextBox>
+                <Button Content="Add" Command="{Binding AddTaskCommand}"></Button>
+            </StackPanel>
+            
+            
+            
+            <ListBox ItemsSource="{Binding Tasks}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Title}"></TextBlock>
+                            <CheckBox IsChecked="{Binding IsDone}" 
+                                      Click="OnToggleDone"
+                                      Tag="{Binding}"></CheckBox>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </DockPanel>
     </Grid>
     
 </Window>
