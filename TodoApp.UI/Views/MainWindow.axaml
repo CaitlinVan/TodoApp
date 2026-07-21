@@ -15,13 +15,43 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
     
-    <!--> Enable Data binding so you reduce manual UI-update code</-->
+    <!-- Enable Data binding so you reduce manual UI-update code /-->
     <Grid>
         <DockPanel>
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Spacing="10" Margin="10">
                 <TextBox Text="{Binding NewTaskTitle}" Watermark="New Task..." Width="300"></TextBox>
                 <Button Content="Add" Command="{Binding AddTaskCommand}"></Button>
             </StackPanel>
+            
+            <!-- List-add row /-->
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Spacing="10" Margin="10">
+                <ComboBox ItemsSource="{Binding Lists}"
+                          SelectedItem="{Binding SelectedList}"
+                          PlaceholderText="No List">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}"></TextBlock>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <TextBox Text="{Binding NewListName}" Watermark="New List..." Width="300"></TextBox>
+                <Button Content="Add List" Command="{Binding AddListCommand}"></Button>
+            </StackPanel>
+            
+            <!-- List listbox /-->
+            <ListBox ItemsSource="{Binding Lists}" DockPanel.Dock="Top" MaxHeight="150">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Name}"></TextBlock>
+                                <Button Content="Delete"
+                                        Command="{Binding $parent[ListBox].((vm:MainWindowViewModel)DataContext).DeleteListCommand}"
+                                        CommandParameter="{Binding}">
+                                </Button>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox> 
             
             
             <ListBox ItemsSource="{Binding Tasks}">
@@ -30,13 +60,17 @@
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="{Binding Title}"></TextBlock>
                             <CheckBox IsChecked="{Binding IsDone}" 
-                                      Click="OnToggleDone"
-                                      Tag="{Binding}"></CheckBox>
+                                      Command="{Binding $parent[ListBox].((vm:MainWindowViewModel)DataContext).ToggleDoneCommand}"
+                                      CommandParameter="{Binding}"
+                                      ></CheckBox>
+                            <Button Content="Delete"
+                                    Command="{Binding $parent[ListBox].((vm:MainWindowViewModel)DataContext).DeleteTaskCommand}"
+                                    CommandParameter="{Binding}"
+                                    ></Button>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
         </DockPanel>
     </Grid>
-    
 </Window>

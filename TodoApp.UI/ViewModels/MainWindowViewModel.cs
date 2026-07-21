@@ -18,7 +18,9 @@ public partial class MainWindowViewModel : ViewModelBase
     public MainWindowViewModel()
     {
         _taskRepository = new TaskRepository(new TodoDbContext());
+        _listRepository = new ListRepository(new TodoDbContext());
         _ = LoadTasksAsync(); 
+        _ = LoadListsAsync();
     }
 
     private async Task LoadTasksAsync()

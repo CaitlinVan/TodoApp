@@ -1,5 +1,4 @@
 using Avalonia.Controls;
-using Avalonia.Interactivity;
 using TodoApp.Console.Domain;
 using TodoApp.UI.ViewModels;
 
@@ -11,12 +10,5 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
     }
-
-    private async void OnToggleDone(object sender, RoutedEventArgs e)
-    {
-        if (sender is CheckBox { Tag: TodoTask task } && DataContext is MainWindowViewModel vm)
-        {
-            await vm.UpdateTaskCommand.ExecuteAsync(task);
-        }
-    }
+    
 }
