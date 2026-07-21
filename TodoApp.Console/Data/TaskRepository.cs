@@ -19,7 +19,7 @@ public class TaskRepository : ITaskRepository
 
     public async Task<List<TodoTask>> GetAllAsync()
     {
-        return await _context.Tasks.ToListAsync();
+        return await _context.Tasks.Include("List").ToListAsync();
     }
 
     public async Task AddAsync(TodoTask task)
