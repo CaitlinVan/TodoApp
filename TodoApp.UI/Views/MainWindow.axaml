@@ -15,12 +15,17 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
     
-    <!-- Enable Data binding so you reduce manual UI-update code /-->
+    <!-- Enable Data binding so you reduce manual UI-update code (AddTask) /-->
     <Grid>
         <DockPanel>
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Spacing="10" Margin="10">
                 <TextBox Text="{Binding NewTaskTitle}" Watermark="New Task..." Width="300"></TextBox>
                 <TextBox Text="{Binding NewTaskDescription}" Watermark="Description (optional)"></TextBox>
+                <ComboBox SelectedIndex="{Binding NewTaskPriority}" PlaceholderText="Priority" Width="120">
+                    <ComboBoxItem>Low</ComboBoxItem>
+                    <ComboBoxItem>Medium</ComboBoxItem>
+                    <ComboBoxItem>High</ComboBoxItem>
+                </ComboBox>
                 <Button Content="Add" Command="{Binding AddTaskCommand}"></Button>
             </StackPanel>
             
