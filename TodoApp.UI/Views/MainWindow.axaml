@@ -20,6 +20,7 @@
         <DockPanel>
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Spacing="10" Margin="10">
                 <TextBox Text="{Binding NewTaskTitle}" Watermark="New Task..." Width="300"></TextBox>
+                <TextBox Text="{Binding NewTaskDescription}" Watermark="Description (optional)"></TextBox>
                 <Button Content="Add" Command="{Binding AddTaskCommand}"></Button>
             </StackPanel>
             
@@ -57,17 +58,20 @@
             <ListBox ItemsSource="{Binding Tasks}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding List.Name}" Foreground="Gray" Margin="10,0,0,0"></TextBlock>
-                            <TextBlock Text="{Binding Title}"></TextBlock>
-                            <CheckBox IsChecked="{Binding IsDone}" 
-                                      Command="{Binding $parent[ListBox].((vm:MainWindowViewModel)DataContext).ToggleDoneCommand}"
-                                      CommandParameter="{Binding}"
-                                      ></CheckBox>
-                            <Button Content="Delete"
-                                    Command="{Binding $parent[ListBox].((vm:MainWindowViewModel)DataContext).DeleteTaskCommand}"
-                                    CommandParameter="{Binding}"
-                                    ></Button>
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding List.Name}" Foreground="Gray" Margin="10,0,0,0"></TextBlock>
+                                <TextBlock Text="{Binding Title}"></TextBlock>
+                                <CheckBox IsChecked="{Binding IsDone}" 
+                                          Command="{Binding $parent[ListBox].((vm:MainWindowViewModel)DataContext).ToggleDoneCommand}"
+                                          CommandParameter="{Binding}"
+                                ></CheckBox>
+                                <Button Content="Delete"
+                                        Command="{Binding $parent[ListBox].((vm:MainWindowViewModel)DataContext).DeleteTaskCommand}"
+                                        CommandParameter="{Binding}"
+                                ></Button>
+                            </StackPanel>
+                            <TextBlock Text="{Binding Description}" Foreground="Gray" FontStyle="Italic" TextWrapping="Wrap"></TextBlock>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
