@@ -18,6 +18,7 @@
     <!-- Enable Data binding so you reduce manual UI-update code (AddTask) /-->
     <Grid>
         <DockPanel>
+          
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Spacing="10" Margin="10">
                 <TextBox Text="{Binding NewTaskTitle}" Watermark="New Task..." Width="300"></TextBox>
                 <TextBox Text="{Binding NewTaskDescription}" Watermark="Description (optional)"></TextBox>
@@ -49,23 +50,28 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Name}"></TextBlock>
-                                <Button Content="Delete"
-                                        Command="{Binding $parent[ListBox].((vm:MainWindowViewModel)DataContext).DeleteListCommand}"
-                                        CommandParameter="{Binding}">
-                                </Button>
+                            <TextBox Text="{Binding Name}" Width="200"></TextBox>
+                               <Button Content="Save"
+                                       Command="{Binding $parent[ListBox].((vm:MainWindowViewModel)DataContext).RenameListCommand}"
+                                       CommandParameter="{Binding}">
+                               </Button>
+                               <Button Content="Delete"
+                                    Command="{Binding $parent[ListBox].((vm:MainWindowViewModel)DataContext).DeleteListCommand}"
+                                    CommandParameter="{Binding}">
+                               </Button>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox> 
             
+            <Button Content="Toggle View" Command="{Binding ToggleViewCommand}" DockPanel.Dock="Top" Margin="10"></Button>
             
-            <ListBox ItemsSource="{Binding Tasks}">
+            <ListBox ItemsSource="{Binding Tasks}" IsVisible="{Binding IsListView}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding List.Name}" Foreground="Gray" Margin="10,0,0,0"></TextBlock>
+                                <TextBlock Text="{Binding List.Name, TargetNullValue= Unsorted}" Foreground="Gray" Margin="10,0,0,0"></TextBlock>
                                 <TextBlock Text="{Binding Title}"></TextBlock>
                                 <CheckBox IsChecked="{Binding IsDone}" 
                                           Command="{Binding $parent[ListBox].((vm:MainWindowViewModel)DataContext).ToggleDoneCommand}"
@@ -81,6 +87,30 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+            
+            <!-- Board View - Sibling to the listbox above /-->
+            <Grid IsVisible="{Binding IsBoardView}" ColumnDefinitions="*,*">
+                <StackPanel>
+                    <TextBlock Text="To Do" FontWeight="Bold" Margin="10"></TextBlock>
+                    <ItemsControl ItemsSource="{Binding NotDoneTasks}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Title}" Margin="10,2" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <TextBlock Text="Done" FontWeight="Bold" Margin="10"></TextBlock>
+                    <ItemsControl ItemsSource="{Binding DoneTasks}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Title}" Margin="10,2" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </Grid>
         </DockPanel>
     </Grid>
 </Window>

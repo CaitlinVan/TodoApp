@@ -16,6 +16,12 @@ public partial class MainWindowViewModel
     [ObservableProperty] 
     private ObservableCollection<TodoList> _lists = new();
 
+    [RelayCommand]
+    private async Task RenameList(TodoList list)
+    {
+        await _listRepository.UpdateAsync(list);
+    }
+
     private async Task LoadListsAsync()
     {
         var lists= await _listRepository.GetAllAsync();
