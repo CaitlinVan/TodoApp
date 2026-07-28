@@ -73,7 +73,7 @@
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{Binding List.Name, TargetNullValue= Unsorted}" Foreground="Gray" Margin="10,0,0,0"></TextBlock>
                                 <TextBlock Text="{Binding Title}"></TextBlock>
-                                <CheckBox IsChecked="{Binding IsDone}" 
+                                <CheckBox IsChecked="{Binding IsDone, Mode=OneWay}" 
                                           Command="{Binding $parent[ListBox].((vm:MainWindowViewModel)DataContext).ToggleDoneCommand}"
                                           CommandParameter="{Binding}"
                                 ></CheckBox>

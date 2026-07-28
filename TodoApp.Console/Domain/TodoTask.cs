@@ -1,12 +1,19 @@
-﻿namespace TodoApp.Console.Domain;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System;
+using System.Collections.Generic;
 
-public class TodoTask
+namespace TodoApp.Console.Domain;
+
+public partial class TodoTask : ObservableObject
 {
     public int Id { get; set; }
     public int? ListId { get; set; }
     public string Title { get; set; } =  string.Empty;
     public string? Description { get; set; }
-    public bool IsDone { get; set; } 
+    
+    [ObservableProperty]
+    private bool _isDone;
+    
     public int? Priority { get; set; }
     public bool IsPinned { get; set; }
     public string? Color { get; set; }

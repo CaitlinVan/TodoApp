@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -33,9 +34,24 @@ public partial class MainWindowViewModel
     public IEnumerable<TodoTask> DoneTasks =>
         Tasks.Where(t => t.IsDone);
 
+    
     partial void OnTasksChanged(ObservableCollection<TodoTask> value)
     {
+        foreach (var task in value)
+        {
+            task.PropertyChanged += OnTaskPropertyChanged;
+        }
+
         OnPropertyChanged(nameof(NotDoneTasks));
         OnPropertyChanged(nameof(DoneTasks));
+    }
+
+    private void OnTaskPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(TodoTask.IsDone))
+        {
+            OnPropertyChanged(nameof(NotDoneTasks));
+            OnPropertyChanged(nameof(DoneTasks));
+        }
     }
 }
