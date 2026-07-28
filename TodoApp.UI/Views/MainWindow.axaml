@@ -16,100 +16,133 @@
     </Design.DataContext>
     
     <!-- Enable Data binding so you reduce manual UI-update code (AddTask) /-->
-    <Grid>
+    <Grid Margin="20">
         <DockPanel>
-          
-            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Spacing="10" Margin="10">
-                <TextBox Text="{Binding NewTaskTitle}" Watermark="New Task..." Width="300"></TextBox>
-                <TextBox Text="{Binding NewTaskDescription}" Watermark="Description (optional)"></TextBox>
-                <ComboBox SelectedIndex="{Binding NewTaskPriority}" PlaceholderText="Priority" Width="120">
-                    <ComboBoxItem>Low</ComboBoxItem>
-                    <ComboBoxItem>Medium</ComboBoxItem>
-                    <ComboBoxItem>High</ComboBoxItem>
-                </ComboBox>
-                <Button Content="Add" Command="{Binding AddTaskCommand}"></Button>
-            </StackPanel>
-            
-            <!-- List-add row /-->
-            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Spacing="10" Margin="10">
-                <ComboBox ItemsSource="{Binding Lists}"
-                          SelectedItem="{Binding SelectedList}"
-                          PlaceholderText="No List">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Name}"></TextBlock>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-                <TextBox Text="{Binding NewListName}" Watermark="New List..." Width="300"></TextBox>
-                <Button Content="Add List" Command="{Binding AddListCommand}"></Button>
-            </StackPanel>
-            
-            <!-- List listbox /-->
-            <ListBox ItemsSource="{Binding Lists}" DockPanel.Dock="Top" MaxHeight="150">
-                <ListBox.ItemTemplate>
+
+            <Border Classes="toolbar-card" DockPanel.Dock="Top">
+                <StackPanel Spacing="12">
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <TextBox Text="{Binding NewTaskTitle}" Watermark="New Task..." Width="300"></TextBox>
+                        <TextBox Text="{Binding NewTaskDescription}" Watermark="Description (optional)"></TextBox>
+                        <ComboBox SelectedIndex="{Binding NewTaskPriority}" PlaceholderText="Priority" Width="120">
+                            <ComboBoxItem>Low</ComboBoxItem>
+                            <ComboBoxItem>Medium</ComboBoxItem>
+                            <ComboBoxItem>High</ComboBoxItem>
+                        </ComboBox>
+                        <Button Content="Add" Command="{Binding AddTaskCommand}" Classes="primary"></Button>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <ComboBox ItemsSource="{Binding Lists}"
+                                  SelectedItem="{Binding SelectedList}"
+                                  PlaceholderText="No List">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}"></TextBlock>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <TextBox Text="{Binding NewListName}" Watermark="New List..." Width="300"></TextBox>
+                        <Button Content="Add List" Command="{Binding AddListCommand}" Classes="primary"></Button>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <ItemsControl ItemsSource="{Binding Lists}" DockPanel.Dock="Top" Margin="0,0,0,16">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBox Text="{Binding Name}" Width="200"></TextBox>
-                               <Button Content="Save"
-                                       Command="{Binding $parent[ListBox].((vm:MainWindowViewModel)DataContext).RenameListCommand}"
-                                       CommandParameter="{Binding}">
-                               </Button>
-                               <Button Content="Delete"
-                                    Command="{Binding $parent[ListBox].((vm:MainWindowViewModel)DataContext).DeleteListCommand}"
-                                    CommandParameter="{Binding}">
-                               </Button>
-                        </StackPanel>
+                        <Border Classes="list-chip">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <TextBox Text="{Binding Name}" Width="120" Background="Transparent" BorderThickness="0" Padding="0"></TextBox>
+                                <Button Content="Save" Classes="ghost"
+                                        Command="{Binding $parent[ItemsControl].((vm:MainWindowViewModel)DataContext).RenameListCommand}"
+                                        CommandParameter="{Binding}">
+                                </Button>
+                                <Button Content="Delete" Classes="ghost"
+                                        Command="{Binding $parent[ItemsControl].((vm:MainWindowViewModel)DataContext).DeleteListCommand}"
+                                        CommandParameter="{Binding}">
+                                </Button>
+                            </StackPanel>
+                        </Border>
                     </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox> 
-            
-            <Button Content="Toggle View" Command="{Binding ToggleViewCommand}" DockPanel.Dock="Top" Margin="10"></Button>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <Button Content="Toggle View" Command="{Binding ToggleViewCommand}" DockPanel.Dock="Top" Classes="secondary" Margin="0,0,0,16"></Button>
             
             <ListBox ItemsSource="{Binding Tasks}" IsVisible="{Binding IsListView}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding List.Name, TargetNullValue= Unsorted}" Foreground="Gray" Margin="10,0,0,0"></TextBlock>
-                                <TextBlock Text="{Binding Title}"></TextBlock>
-                                <CheckBox IsChecked="{Binding IsDone, Mode=OneWay}" 
-                                          Command="{Binding $parent[ListBox].((vm:MainWindowViewModel)DataContext).ToggleDoneCommand}"
-                                          CommandParameter="{Binding}"
-                                ></CheckBox>
-                                <Button Content="Delete"
-                                        Command="{Binding $parent[ListBox].((vm:MainWindowViewModel)DataContext).DeleteTaskCommand}"
-                                        CommandParameter="{Binding}"
-                                ></Button>
+                        <Border Classes="task-card">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding Title}" FontWeight="Medium" 
+                                               Foreground="{StaticResource BrushTextPrimary}" 
+                                               VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                    <CheckBox IsChecked="{Binding IsDone, Mode=OneWay}" 
+                                              Command="{Binding $parent[ListBox].((vm:MainWindowViewModel)DataContext).ToggleDoneCommand}"
+                                              CommandParameter="{Binding}"/>
+                                    <Button Content="Delete"
+                                            Command="{Binding $parent[ListBox].((vm:MainWindowViewModel)DataContext).DeleteTaskCommand}"
+                                            CommandParameter="{Binding}" Margin="8,0,0,0"/>
+                                </StackPanel>
+                                <Border Classes="tag tag-todo" HorizontalAlignment="Left" Margin="0,6,0,0">
+                                    <TextBlock Text="{Binding List.Name, TargetNullValue=unsorted}" Classes="tag-todo-text"/>
+                                </Border>
+                                <TextBlock Text="{Binding Description}" Foreground="{StaticResource BrushTextSecondary}" 
+                                           FontStyle="Italic" TextWrapping="Wrap" Margin="0,6,0,0"/>
                             </StackPanel>
-                            <TextBlock Text="{Binding Description}" Foreground="Gray" FontStyle="Italic" TextWrapping="Wrap"></TextBlock>
-                        </StackPanel>
+                        </Border>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
             
             <!-- Board View - Sibling to the listbox above /-->
             <Grid IsVisible="{Binding IsBoardView}" ColumnDefinitions="*,*">
-                <StackPanel>
-                    <TextBlock Text="To Do" FontWeight="Bold" Margin="10"></TextBlock>
-                    <ItemsControl ItemsSource="{Binding NotDoneTasks}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Title}" Margin="10,2" />
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </StackPanel>
-                <StackPanel Grid.Column="1">
-                    <TextBlock Text="Done" FontWeight="Bold" Margin="10"></TextBlock>
-                    <ItemsControl ItemsSource="{Binding DoneTasks}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Title}" Margin="10,2" />
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </StackPanel>
+                <Border Classes="board-column-todo" Margin="0,0,8,0">
+                    <StackPanel>
+                        <TextBlock Text="To do" FontWeight="SemiBold" Foreground="{StaticResource BrushCoralDark}" Margin="0,0,0,10"/>
+                        <ItemsControl ItemsSource="{Binding NotDoneTasks}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Classes="task-card">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Title}" FontWeight="Medium" Foreground="{StaticResource BrushTextPrimary}"/>
+                                            <Border Classes="tag tag-todo" HorizontalAlignment="Left" Margin="0,6,0,0">
+                                                <TextBlock Text="{Binding List.Name, TargetNullValue=unsorted}" Classes="tag-todo-text"/>
+                                            </Border>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
+                <Border Classes="board-column-done" Grid.Column="1" Margin="8,0,0,0">
+                    <StackPanel>
+                        <TextBlock Text="Done" FontWeight="SemiBold" Foreground="{StaticResource BrushGreen}" Margin="0,0,0,10"/>
+                        <ItemsControl ItemsSource="{Binding DoneTasks}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Classes="task-card">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Title}" FontWeight="Medium" 
+                                                       Foreground="{StaticResource BrushTextSecondary}" TextDecorations="Strikethrough"/>
+                                            <Border Classes="tag tag-done" HorizontalAlignment="Left" Margin="0,6,0,0">
+                                                <TextBlock Text="{Binding List.Name, TargetNullValue=unsorted}" Classes="tag-done-text"/>
+                                            </Border>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
             </Grid>
         </DockPanel>
     </Grid>
