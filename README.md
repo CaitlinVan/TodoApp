@@ -79,12 +79,15 @@ This project provided practical experience with:
 * Labels and categories
 * Improved validation and undo/cancel functionality for editing
 
-
-
 ## ER-Diagram and Requirement list (MoSCow of functional and non-functional requirements):
 
 [To Do (Side-project 2).docx](https://github.com/user-attachments/files/30543965/To.Do.Side-project.2.docx)
 
+## Screenshots 
+
+Start screen:
+
+<img width="1950" height="1074" alt="image" src="https://github.com/user-attachments/assets/fa36de7a-4dfd-4a36-a094-de51d7eb22c8" />
 
 
 
