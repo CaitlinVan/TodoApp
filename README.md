@@ -85,9 +85,32 @@ This project provided practical experience with:
 
 ## Screenshots 
 
-Start screen:
+Start display:
 
 <img width="1950" height="1074" alt="image" src="https://github.com/user-attachments/assets/fa36de7a-4dfd-4a36-a094-de51d7eb22c8" />
+
+
+Priority options:
+
+<img width="1872" height="974" alt="image" src="https://github.com/user-attachments/assets/7a324dd1-df3e-49f2-887a-2aac562dd834" />
+
+## Toggle view (screenshots):
+
+Untoggled/un-marked:
+
+<img width="276" height="209" alt="image" src="https://github.com/user-attachments/assets/a807dd3b-4c2b-4168-9fd3-aaf437dd0e36" />
+
+<img width="1860" height="618" alt="image" src="https://github.com/user-attachments/assets/a4192c5d-ef85-408e-b6c4-3d783095c7d5" />
+
+Toggled/marked:
+
+<img width="580" height="460" alt="image" src="https://github.com/user-attachments/assets/55e3d53e-7d77-4987-a739-f38022e4a240" />
+
+<img width="1884" height="584" alt="image" src="https://github.com/user-attachments/assets/df263ad6-309f-4d58-82d8-ed699136178b" />
+
+
+
+
 
 
 
